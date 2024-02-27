@@ -4,9 +4,7 @@ import com.ewingelen.github.domain.Repository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class BaseRepository(
-    private val service: AnimeQuoteService
-) : Repository {
+class BaseRepository(private val service: AnimeQuoteService) : Repository {
 
     constructor() : this(
         Retrofit.Builder()
@@ -16,12 +14,11 @@ class BaseRepository(
             .create(AnimeQuoteService::class.java)
     )
 
-    override suspend fun loadQuote(): Pair<Boolean, String> {
+    override suspend fun loadQuote(): String {
         return try {
-            val quote = service.animeQuote().quote
-            Pair(true, quote)
+            service.animeQuote().quote
         } catch (e: Exception) {
-            Pair(false, e.message ?: "error")
+            e.message ?: "error"
         }
     }
 }

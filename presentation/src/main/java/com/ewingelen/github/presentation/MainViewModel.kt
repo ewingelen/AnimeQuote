@@ -16,7 +16,7 @@ class MainViewModel(
 
     fun loadQuote() {
         viewModelScope.launch {
-            val quote = repository.loadQuote().second
+            val quote = repository.loadQuote()
             innerQuoteLiveData.value = quote
         }
     }
